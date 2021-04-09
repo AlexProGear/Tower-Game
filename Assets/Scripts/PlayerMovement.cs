@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
@@ -22,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         // Set new destination on click
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
         {
             Ray lookDirRay = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(lookDirRay, out RaycastHit hitInfo))
