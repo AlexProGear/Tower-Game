@@ -6,13 +6,22 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class PlayerShooting : MonoBehaviour
 {
+    // Serialized fields
+    [SerializeField] private Transform gunHoldingPoint;
     [SerializeField] private float rotationSpeed;
 
+    // Unity components
     private Camera mainCamera;
     private Animator animator;
     private NavMeshAgent navAgent;
     
-    private bool hasGun;
+    // Private fields
+    private bool canWieldGun;
+    private WeaponSystem.GunType equippedGunType = WeaponSystem.GunType.None;
+    [SerializeField] private WeaponSystem.GunType lastEquippedGunType = WeaponSystem.GunType.Pistol;
+    private GunObject equippedGunObject;
+    private GameObject equippedGunGameObject;
+    
     private Quaternion targetRotation;
     private Coroutine cooldownCoroutine;
     private float shootCooldownTime = 0f;
@@ -22,12 +31,13 @@ public class PlayerShooting : MonoBehaviour
         mainCamera = Camera.main;
         animator = GetComponent<Animator>();
         navAgent = GetComponent<NavMeshAgent>();
+        EquipGun(WeaponSystem.GunType.None);
     }
 
     private void Update()
     {
         Ray lookDirRay = mainCamera.ScreenPointToRay(Input.mousePosition);
-        if (hasGun && Physics.Raycast(lookDirRay, out RaycastHit hitInfo))
+        if (canWieldGun && Physics.Raycast(lookDirRay, out RaycastHit hitInfo))
         {
             UpdateGunAiming(hitInfo.point);
             if (Input.GetMouseButton(0))
@@ -35,6 +45,24 @@ public class PlayerShooting : MonoBehaviour
                 UpdateShooting(hitInfo.point);
             }
         }
+    }
+
+    private void EquipGun(WeaponSystem.GunType type)
+    {
+        if (equippedGunType == type)
+            return;
+        
+        equippedGunType = type;
+        
+        if (equippedGunGameObject != null)
+            Destroy(equippedGunGameObject);
+        
+        if (type == WeaponSystem.GunType.None)
+            return;
+
+        equippedGunObject = WeaponSystem.Instance.GunObjectsDict[type];
+        GameObject gunPrefab = WeaponSystem.Instance.GunPrefabsDict[equippedGunObject.PrefabName];
+        equippedGunGameObject = Instantiate(gunPrefab, gunHoldingPoint);
     }
 
     private void UpdateGunAiming(Vector3 hitPoint)
@@ -63,7 +91,7 @@ public class PlayerShooting : MonoBehaviour
 
     private IEnumerator CooldownCoroutine()
     {
-        shootCooldownTime = 1f; // Arbitrary cooldown time
+        shootCooldownTime = equippedGunObject.ShotsInterval;
         while (shootCooldownTime > 0)
         {
             shootCooldownTime -= Time.deltaTime;
@@ -73,7 +101,7 @@ public class PlayerShooting : MonoBehaviour
 
     private void OnAnimatorIK(int layerIndex)
     {
-        if (hasGun)
+        if (canWieldGun)
         {
             animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 0.9f);
             animator.SetIKPosition(AvatarIKGoal.RightHand, transform.position + transform.forward + Vector3.up);
@@ -84,8 +112,9 @@ public class PlayerShooting : MonoBehaviour
     {
         if (other.gameObject.CompareTag("GunSpot"))
         {
-            hasGun = true;
+            canWieldGun = true;
             navAgent.updateRotation = false;
+            EquipGun(lastEquippedGunType);
         }
     }
     
@@ -93,8 +122,9 @@ public class PlayerShooting : MonoBehaviour
     {
         if (other.gameObject.CompareTag("GunSpot"))
         {
-            hasGun = false;
+            canWieldGun = false;
             navAgent.updateRotation = true;
+            EquipGun(WeaponSystem.GunType.None);
         }
     }
 }
