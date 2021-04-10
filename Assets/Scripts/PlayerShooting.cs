@@ -12,6 +12,7 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private Transform shoulderPoint;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private LayerMask aimMask;
+    [SerializeField] private GameObject panelEquipment;
 
     // Unity components
     private Camera mainCamera;
@@ -40,6 +41,7 @@ public class PlayerShooting : MonoBehaviour
         animator = GetComponent<Animator>();
         navAgent = GetComponent<NavMeshAgent>();
         EquipGun(WeaponSystem.GunType.None);
+        panelEquipment.SetActive(false);
     }
 
     private void Update()
@@ -156,6 +158,7 @@ public class PlayerShooting : MonoBehaviour
             canWieldGun = true;
             navAgent.updateRotation = false;
             EquipGun(lastEquippedGunType);
+            panelEquipment.SetActive(true);
         }
     }
     
@@ -167,6 +170,7 @@ public class PlayerShooting : MonoBehaviour
             navAgent.updateRotation = true;
             lastEquippedGunType = equippedGunType;
             EquipGun(WeaponSystem.GunType.None);
+            panelEquipment.SetActive(false);
         }
     }
 }
