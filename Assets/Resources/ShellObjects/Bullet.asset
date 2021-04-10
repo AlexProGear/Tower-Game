@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed62b8d54a479504aaab478aa479fd04, type: 3}
-  m_Name: RPG
+  m_Script: {fileID: 11500000, guid: 90bc5dafb7b74cf889881e8c7505f46a, type: 3}
+  m_Name: Bullet
   m_EditorClassIdentifier: 
-  prefabName: RPG7
-  bulletsPerShot: 1
-  bulletSpread: 0.05
-  shellType: 2
-  shotsInterval: 5
+  prefabName: bullet
+  shellSpeed: 10
+  collisionForce: 1

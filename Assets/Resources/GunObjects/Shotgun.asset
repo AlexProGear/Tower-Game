@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabName: Bennelli_M4
   bulletsPerShot: 8
-  bulletSpread: 0.3
-  bulletSpeed: 1
-  shotsInterval: 2
+  bulletSpread: 0.1
+  shellType: 1
+  shotsInterval: 1

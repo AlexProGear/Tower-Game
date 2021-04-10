@@ -1,12 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using ScriptableObjects;
 using UnityEngine;
 
 public class WeaponSystem : MonoBehaviour
 {
     public static WeaponSystem Instance { get; private set; }
-    public Dictionary<GunType, GunObject> GunObjectsDict { get; private set; }
-    public Dictionary<string, GameObject> GunPrefabsDict { get; private set; }
+    // Guns
+    private Dictionary<GunType, GunTypeInfo> gunObjectsDict;
+    private Dictionary<string, GameObject> gunPrefabsDict;
+    // Shells
+    private Dictionary<ShellType, ShellTypeInfo> shellObjectsDict;
+    private Dictionary<string, GameObject> shellPrefabsDict;
+
+    // Public getters
+    public GunTypeInfo GetGunObject(GunType type) => gunObjectsDict[type];
+    public GameObject GetGunPrefab(string prefabName) => gunPrefabsDict[prefabName];
+    public ShellTypeInfo GetShellObject(ShellType type) => shellObjectsDict[type];
+    public GameObject GetShellPrefab(string prefabName) => shellPrefabsDict[prefabName];
     
     public enum GunType
     {
@@ -17,6 +28,13 @@ public class WeaponSystem : MonoBehaviour
         Uzi,
         RPG
     }
+
+    public enum ShellType
+    {
+        None,
+        Bullet,
+        Rocket
+    }
     
     private void Awake()
     {
@@ -26,13 +44,19 @@ public class WeaponSystem : MonoBehaviour
 
     private void InitializeData()
     {
-        GunObjectsDict = new Dictionary<GunType, GunObject>();
-        GunObject[] gunObjects = Resources.LoadAll<GunObject>("GunObjects/");
-        foreach (GunObject gunObject in gunObjects)
+        InitializeGunData();
+        InitializeShellData();
+    }
+
+    private void InitializeGunData()
+    {
+        gunObjectsDict = new Dictionary<GunType, GunTypeInfo>();
+        GunTypeInfo[] gunObjects = Resources.LoadAll<GunTypeInfo>("GunObjects/");
+        foreach (GunTypeInfo gunObject in gunObjects)
         {
             if (Enum.TryParse(gunObject.name, out GunType gunType))
             {
-                GunObjectsDict.Add(gunType, gunObject);
+                gunObjectsDict.Add(gunType, gunObject);
             }
             else
             {
@@ -40,11 +64,35 @@ public class WeaponSystem : MonoBehaviour
             }
         }
 
-        GunPrefabsDict = new Dictionary<string, GameObject>();
+        gunPrefabsDict = new Dictionary<string, GameObject>();
         GameObject[] gunPrefs = Resources.LoadAll<GameObject>("GunPrefabs/");
         foreach (GameObject gunPref in gunPrefs)
         {
-            GunPrefabsDict.Add(gunPref.name, gunPref);
+            gunPrefabsDict.Add(gunPref.name, gunPref);
+        }
+    }
+
+    private void InitializeShellData()
+    {
+        shellObjectsDict = new Dictionary<ShellType, ShellTypeInfo>();
+        ShellTypeInfo[] shellObjects = Resources.LoadAll<ShellTypeInfo>("ShellObjects/");
+        foreach (ShellTypeInfo shellObject in shellObjects)
+        {
+            if (Enum.TryParse(shellObject.name, out ShellType shellType))
+            {
+                shellObjectsDict.Add(shellType, shellObject);
+            }
+            else
+            {
+                Debug.LogWarning($"Cannot retrieve ShellType for ShellObject {shellObject.name}");
+            }
+        }
+
+        shellPrefabsDict = new Dictionary<string, GameObject>();
+        GameObject[] shellPrefs = Resources.LoadAll<GameObject>("ShellPrefabs/");
+        foreach (GameObject shellPref in shellPrefs)
+        {
+            shellPrefabsDict.Add(shellPref.name, shellPref);
         }
     }
 }
