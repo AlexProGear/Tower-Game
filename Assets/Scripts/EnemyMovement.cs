@@ -22,7 +22,7 @@ public class EnemyMovement : MonoBehaviour
 
     private IEnumerator UpdateTargetPositionPeriodically()
     {
-        while (gameObject.activeSelf)
+        while (enabled)
         {
             navAgent.SetDestination(playerTransform.position);
             yield return new WaitForSeconds(updateTargetInterval);

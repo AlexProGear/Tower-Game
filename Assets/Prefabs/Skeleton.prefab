@@ -357,6 +357,10 @@ GameObject:
   - component: {fileID: 7296162070022337934}
   - component: {fileID: -6449186618789274254}
   - component: {fileID: -7392773151799428739}
+  - component: {fileID: 922624573207215706}
+  - component: {fileID: 3833957262739065747}
+  - component: {fileID: 5890803949048735641}
+  - component: {fileID: 3632705883841306819}
   m_Layer: 0
   m_Name: Skeleton
   m_TagString: Untagged
@@ -434,6 +438,61 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   updateTargetInterval: 0.5
+--- !u!114 &922624573207215706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7296162070029747724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7c4a2163aa72094486a5653b76b469b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &3833957262739065747
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7296162070029747724}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 1.8, z: 0.5}
+  m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!54 &5890803949048735641
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7296162070029747724}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!138 &3632705883841306819
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7296162070029747724}
+  m_ConnectedBody: {fileID: 9099794845318628005}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!1 &7296162070029747726
 GameObject:
   m_ObjectHideFlags: 0

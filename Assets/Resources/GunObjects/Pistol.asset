@@ -16,4 +16,4 @@ MonoBehaviour:
   bulletsPerShot: 1
   bulletSpread: 0.01
   shellType: 1
-  shotsInterval: 0.5
+  shotsInterval: 0.25

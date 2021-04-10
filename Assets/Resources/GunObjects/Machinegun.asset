@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabName: AK74
   bulletsPerShot: 1
-  bulletSpread: 0.03
+  bulletSpread: 0.05
   shellType: 1
   shotsInterval: 0.15

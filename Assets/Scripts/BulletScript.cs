@@ -9,7 +9,7 @@ public class BulletScript : MonoBehaviour
     private Rigidbody rb;
     
     private float speed;
-    private float collisionForce;
+    public float collisionForce { get; private set; }
 
     private const float LifeTime = 10f;
 
@@ -30,10 +30,11 @@ public class BulletScript : MonoBehaviour
         rb.position += transform.forward * (Time.deltaTime * speed);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider collider)
     {
-        if (other.isTrigger)
+        if (collider.isTrigger)
             return;
+        
         Destroy(gameObject);
     }
 }

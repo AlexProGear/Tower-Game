@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabName: bullet
   shellSpeed: 10
-  collisionForce: 1
+  collisionForce: 10
