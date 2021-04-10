@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyDeath : MonoBehaviour
@@ -25,6 +26,7 @@ public class EnemyDeath : MonoBehaviour
             {
                 ragdollStatus = true;
                 EnableRagdoll();
+                EnemySpawner.Instance.RemoveDead(this.gameObject);
                 Destroy(gameObject, 10f);
             }
             PushRagdoll(other.GetComponent<BulletScript>());
