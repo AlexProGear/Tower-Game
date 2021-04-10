@@ -165,6 +165,7 @@ public class PlayerShooting : MonoBehaviour
         {
             canWieldGun = false;
             navAgent.updateRotation = true;
+            lastEquippedGunType = equippedGunType;
             EquipGun(WeaponSystem.GunType.None);
         }
     }
