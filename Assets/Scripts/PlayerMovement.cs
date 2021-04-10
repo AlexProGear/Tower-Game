@@ -16,6 +16,13 @@ public class PlayerMovement : MonoBehaviour
         mainCamera = Camera.main;
         animator = GetComponent<Animator>();
         navAgent = GetComponent<NavMeshAgent>();
+        ApplySettings();
+    }
+
+    private void ApplySettings()
+    {
+        PlayerSettings settings = Resources.Load<PlayerSettings>("PlayerSettings");
+        navAgent.speed = settings.MovementSpeed;
     }
 
     private void Update()
